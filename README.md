@@ -6,12 +6,23 @@ As discussed, we have divided the project into five major responsibilities to en
 
 ---
 
-## 1. Project Overview
+## 1. Background & Motivation
+
+In a traditional chatbot (like vanilla ChatGPT), you ask a question, and one model tries to answer from memory. If the question requires searching live data, doing math, remembering past company context, and staying safe, a single prompt usually gets overwhelmed, hallucinates, or fails.
+
+Our end goal is an autonomous workflow engine where specialized AI agents collaborate like human coworkers to solve complex, real-world requests end-to-end.
+
+---
+
+## 2. Project Overview & Architecture
 
 We are building a **Multi-Agent AI System using LangGraph**, where multiple specialized agents collaborate to understand user requests, execute tasks, retrieve information, perform analysis, and generate a final response.
 
-The overall workflow consists of:
+### 📐 End-to-End System Workflow
 
+![Multi-Agent AI Workflow Architecture](architecture_flow.png)
+
+The overall workflow consists of:
 - **Input Guardrail:** Checks malicious prompts, prompt injection attempts, and sensitive information such as API keys, emails, and phone numbers.
 - **Memory Engine:** Retrieves relevant long-term user context and preferences.
 - **Supervisor / Planner Agent:** Understands the request, breaks it into subtasks, and decides which agents/tools should execute them.
@@ -23,12 +34,10 @@ The overall workflow consists of:
 
 ---
 
-## 2. Individual Responsibilities
+## 3. Individual Responsibilities
 
 ### 💻 Developer 1 – Sandeep Rana
-
 **Orchestration Engine, Planning & State Graph**
-
 - Build the master multi-agent workflow using LangGraph `StateGraph`.
 - Implement Supervisor / Planner Agent.
 - Decompose user requests into an execution DAG.
@@ -36,9 +45,7 @@ The overall workflow consists of:
 - Handle state persistence, recursion limits, and error recovery.
 
 ### 💻 Developer 2 – Pooja Gholap
-
 **Specialized Worker Agents & ReAct Tool Execution**
-
 - Implement the ReAct reasoning loop (`Thought → Action → Observation`).
 - Develop Research Agent using DuckDuckGo / Tavily.
 - Develop Analytical Agent using Python REPL and `pandas`.
@@ -46,9 +53,7 @@ The overall workflow consists of:
 - Define Pydantic schemas and implement exception handling/retries.
 
 ### 💻 Developer 3 – Rajarshi
-
 **Dual-Layer Memory & Context Engine**
-
 - Implement short-term conversational memory.
 - Implement long-term memory using ChromaDB / FAISS.
 - Integrate `sentence-transformers` embeddings.
@@ -56,9 +61,7 @@ The overall workflow consists of:
 - Implement semantic memory retrieval using cosine similarity.
 
 ### 💻 Developer 4 – Harshavardhan M
-
 **Security Guardrails & Quantitative Evaluation**
-
 - Implement input guardrails for prompt injection.
 - Implement PII detection and sanitization.
 - Implement output validation and hallucination checks.
@@ -68,9 +71,7 @@ The overall workflow consists of:
 - Conduct an ablation study comparing Single ReAct Agent vs Multi-Agent System.
 
 ### 📝 Developer 5 – Hemlata Mingwal
-
 **Documentation & Technical Report**
-
 - Prepare overall system architecture diagrams.
 - Create LangGraph state machine, ReAct sequence, and memory flow diagrams.
 - Document theoretical concepts and relevant research papers.
@@ -80,12 +81,11 @@ The overall workflow consists of:
 
 ---
 
-## 3. GitHub Collaboration & Development Guidelines
+## 4. GitHub Collaboration & Development Guidelines
 
 To maintain clean code management and avoid conflicts, everyone needs to follow these steps:
 
 ### Step 1: Clone the repository
-
 GitHub Repository: [conversational_ai_group_13](https://github.com/sandeep15rana/conversational_ai_group_13)
 
 ```bash
@@ -94,17 +94,14 @@ cd conversational_ai_group_13
 ```
 
 ### Step 2: Create your own branch
-
 Everyone must create a separate branch for their assigned responsibility.
 
 Example:
-
 ```bash
 git checkout -b feature/orchestration
 ```
 
 **Suggested branch names:**
-
 - `feature/orchestration`
 - `feature/worker-agents`
 - `feature/memory-engine`
@@ -112,7 +109,6 @@ git checkout -b feature/orchestration
 - `feature/documentation`
 
 ### Step 3: Develop and commit your changes
-
 Work independently within your assigned module.
 
 ```bash
@@ -125,7 +121,7 @@ Once the work is ready, we can review and merge individual branches into the `ma
 
 ---
 
-## 4. Parallel Development & Integration Strategy
+## 5. Parallel Development & Integration Strategy
 
 Since some components depend on other members' implementations, we should not wait for all modules to be completed before starting development.
 
@@ -140,7 +136,7 @@ Since some components depend on other members' implementations, we should not wa
 
 ---
 
-## 5. Final Objective
+## 6. Final Objective
 
 Our goal is to develop a working, integrated Multi-Agent AI System with proper security, memory, tool execution, evaluation, and observability, supported by technical documentation and experimental results.
 
