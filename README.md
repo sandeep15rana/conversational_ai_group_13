@@ -11,6 +11,7 @@ As discussed, we have divided the project into five major responsibilities to en
 We are building a **Multi-Agent AI System using LangGraph**, where multiple specialized agents collaborate to understand user requests, execute tasks, retrieve information, perform analysis, and generate a final response.
 
 The overall workflow consists of:
+
 - **Input Guardrail:** Checks malicious prompts, prompt injection attempts, and sensitive information such as API keys, emails, and phone numbers.
 - **Memory Engine:** Retrieves relevant long-term user context and preferences.
 - **Supervisor / Planner Agent:** Understands the request, breaks it into subtasks, and decides which agents/tools should execute them.
@@ -25,7 +26,9 @@ The overall workflow consists of:
 ## 2. Individual Responsibilities
 
 ### 💻 Developer 1 – Sandeep Rana
+
 **Orchestration Engine, Planning & State Graph**
+
 - Build the master multi-agent workflow using LangGraph `StateGraph`.
 - Implement Supervisor / Planner Agent.
 - Decompose user requests into an execution DAG.
@@ -33,7 +36,9 @@ The overall workflow consists of:
 - Handle state persistence, recursion limits, and error recovery.
 
 ### 💻 Developer 2 – Pooja Gholap
+
 **Specialized Worker Agents & ReAct Tool Execution**
+
 - Implement the ReAct reasoning loop (`Thought → Action → Observation`).
 - Develop Research Agent using DuckDuckGo / Tavily.
 - Develop Analytical Agent using Python REPL and `pandas`.
@@ -41,7 +46,9 @@ The overall workflow consists of:
 - Define Pydantic schemas and implement exception handling/retries.
 
 ### 💻 Developer 3 – Rajarshi
+
 **Dual-Layer Memory & Context Engine**
+
 - Implement short-term conversational memory.
 - Implement long-term memory using ChromaDB / FAISS.
 - Integrate `sentence-transformers` embeddings.
@@ -49,7 +56,9 @@ The overall workflow consists of:
 - Implement semantic memory retrieval using cosine similarity.
 
 ### 💻 Developer 4 – Harshavardhan M
+
 **Security Guardrails & Quantitative Evaluation**
+
 - Implement input guardrails for prompt injection.
 - Implement PII detection and sanitization.
 - Implement output validation and hallucination checks.
@@ -59,7 +68,9 @@ The overall workflow consists of:
 - Conduct an ablation study comparing Single ReAct Agent vs Multi-Agent System.
 
 ### 📝 Developer 5 – Hemlata Mingwal
+
 **Documentation & Technical Report**
+
 - Prepare overall system architecture diagrams.
 - Create LangGraph state machine, ReAct sequence, and memory flow diagrams.
 - Document theoretical concepts and relevant research papers.
@@ -74,6 +85,7 @@ The overall workflow consists of:
 To maintain clean code management and avoid conflicts, everyone needs to follow these steps:
 
 ### Step 1: Clone the repository
+
 GitHub Repository: [conversational_ai_group_13](https://github.com/sandeep15rana/conversational_ai_group_13)
 
 ```bash
@@ -82,14 +94,17 @@ cd conversational_ai_group_13
 ```
 
 ### Step 2: Create your own branch
+
 Everyone must create a separate branch for their assigned responsibility.
 
 Example:
+
 ```bash
 git checkout -b feature/orchestration
 ```
 
 **Suggested branch names:**
+
 - `feature/orchestration`
 - `feature/worker-agents`
 - `feature/memory-engine`
@@ -97,6 +112,7 @@ git checkout -b feature/orchestration
 - `feature/documentation`
 
 ### Step 3: Develop and commit your changes
+
 Work independently within your assigned module.
 
 ```bash
