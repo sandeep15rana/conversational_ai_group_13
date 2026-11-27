@@ -78,7 +78,7 @@ def load_integrated_graph_module():
     return module
 
 
-def initial_state(query: str, session_id: str, user_id: str = "rajarshi") -> dict:
+def initial_state(query: str, session_id: str, user_id: str = "demo_user") -> dict:
     """Same shape as Sandeep's run_orchestration_demo.py."""
     return {
         "session_id": session_id, "user_id": user_id, "raw_query": query, "is_safe": True,
@@ -153,10 +153,10 @@ def test_attack_is_not_memorized(app, memory):
 
 
 def test_pii_from_query_is_not_stored(app, memory):
-    query = "I work at ZS Associates. Email me at raj@corp.com. Compare NVIDIA and AMD revenue."
+    query = "I work at Acme Corp. Email me at raj@corp.com. Compare NVIDIA and AMD revenue."
     app.invoke(initial_state(query, "thread_p"), config={"configurable": {"thread_id": "thread_p"}})
-    stored = " ".join(r.text for r in memory.list_memories("rajarshi"))
-    assert "raj@corp.com" not in stored and "User works at ZS Associates" in stored
+    stored = " ".join(r.text for r in memory.list_memories("demo_user"))
+    assert "raj@corp.com" not in stored and "User works at Acme Corp" in stored
 
 
 def test_pooja_synthesis_agent_receives_memory(app, memory):

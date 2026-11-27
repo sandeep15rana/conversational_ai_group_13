@@ -52,7 +52,7 @@ def test_invalid_user_ids_rejected(bad):
 
 
 def test_valid_user_id_is_trimmed():
-    assert validate_user_id("  rajarshi.pal@zs  ") == "rajarshi.pal@zs"
+    assert validate_user_id("  john.doe@example  ") == "john.doe@example"
 
 
 def test_candidate_validation():

@@ -55,7 +55,7 @@ def test_negated_format_without_alternative_is_ignored():
 @pytest.mark.parametrize(
     "sentence, expected",
     [
-        ("My name is Rajarshi and I work at ZS Associates.", ["User's name is Rajarshi", "User works at ZS Associates"]),
+        ("My name is Alex and I work at Acme Corp.", ["User's name is Alex", "User works at Acme Corp"]),
         ("I am a senior data analyst", ["User is a senior data analyst"]),
         ("I'm based in Pune", ["User is based in Pune"]),
         ("I am interested in semiconductor stocks", ["User is interested in semiconductor stocks"]),
@@ -80,11 +80,11 @@ def test_conclusion_from_final_output():
 
 
 def test_conclusion_keeps_only_the_request():
-    turn = user("Hello! I work at ZS Associates. I prefer tables. Compare NVIDIA and AMD growth.")
+    turn = user("Hello! I work at Acme Corp. I prefer tables. Compare NVIDIA and AMD growth.")
     out = rules.extract([turn], "NVIDIA grew 36.28% while AMD grew 52.17% over the period.")
     conclusion = [c.text for c in out if c.memory_type == MemoryType.CONCLUSION][0]
     assert conclusion.startswith("Past question: Compare NVIDIA and AMD growth.")
-    assert "ZS Associates" not in conclusion and "tables" not in conclusion and "Hello" not in conclusion
+    assert "Acme Corp" not in conclusion and "tables" not in conclusion and "Hello" not in conclusion
 
 
 def test_no_conclusion_for_tiny_output():
@@ -115,10 +115,10 @@ def test_llm_extractor_parses_and_validates():
         {"text": "User prefers tables", "memory_type": "preference", "confidence": 0.9,
          "preference_key": "format", "preference_value": "table"},
         {"text": "x", "memory_type": "fact"},  # invalid: too short -> skipped, not fatal
-        {"text": "User works at ZS", "memory_type": "fact", "confidence": 0.8},
+        {"text": "User works at Acme", "memory_type": "fact", "confidence": 0.8},
     ]}
     out = LLMExtractor(MockLLM("```json\n" + json.dumps(payload) + "\n```")).extract([user("hi")])
-    assert [c.text for c in out] == ["User prefers tables", "User works at ZS"]
+    assert [c.text for c in out] == ["User prefers tables", "User works at Acme"]
     assert all(c.source == MemorySource.LLM for c in out)
 
 

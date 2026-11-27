@@ -26,11 +26,11 @@ def test_preferences_always_loaded_even_if_unrelated(engine):
 
 
 def test_retrieve_filters_by_min_similarity(engine):
-    engine.long_term.add("u1", fact("User works at ZS Associates in Pune"))
+    engine.long_term.add("u1", fact("User works at Acme Corp in Pune"))
     engine.long_term.add("u1", fact("Quantum chromodynamics lattice gauge"))
-    hits = engine.retriever.retrieve("u1", "Where does the user work at ZS")
+    hits = engine.retriever.retrieve("u1", "Where does the user work at Acme")
     texts = [h.record.text for h in hits]
-    assert "User works at ZS Associates in Pune" in texts
+    assert "User works at Acme Corp in Pune" in texts
     assert "Quantum chromodynamics lattice gauge" not in texts
     assert all(h.similarity >= engine.config.min_similarity for h in hits)
 
@@ -80,7 +80,7 @@ def test_context_respects_token_budget(embedder):
 
 # ---------------------------------------------------------------- engine
 def test_consolidate_extracts_and_dedupes(engine):
-    engine.record_turn("u1", "s1", "user", "My name is Rajarshi. I prefer bullet points.")
+    engine.record_turn("u1", "s1", "user", "My name is Alex. I prefer bullet points.")
     first = engine.consolidate("u1", "s1", final_output="NVIDIA grew 36.28% from Q1 to Q3 in data center revenue.")
     assert first.added == 3 and first.extractor == "rules"  # name, preference, conclusion
     # Same turn again -> already processed, nothing new.
@@ -98,7 +98,7 @@ def test_consolidate_without_conclusions(engine):
 
 
 def test_forget_user_and_end_session(engine):
-    engine.remember("u1", "User works at ZS Associates")
+    engine.remember("u1", "User works at Acme Corp")
     engine.record_turn("u1", "s1", "user", "hello")
     assert engine.forget_user("u1") == 1 and engine.list_memories("u1") == []
     engine.end_session("u1", "s1")
@@ -169,10 +169,10 @@ def test_missing_user_id_skips_memory(default_engine):
 
 
 def test_helpers_for_other_teams():
-    state = {"recalled_context": "User preferences:\n- User prefers format: table\nKnown facts about the user:\n- User works at ZS"}
-    assert memory_context_for_synthesis(state) == ["User prefers format: table", "User works at ZS"]
+    state = {"recalled_context": "User preferences:\n- User prefers format: table\nKnown facts about the user:\n- User works at Acme"}
+    assert memory_context_for_synthesis(state) == ["User prefers format: table", "User works at Acme"]
     block = build_supervisor_memory_block(state)
-    assert block.startswith("### Long-term memory") and "User works at ZS" in block
+    assert block.startswith("### Long-term memory") and "User works at Acme" in block
     assert memory_context_for_synthesis({}) == [] and build_supervisor_memory_block({}) == ""
 
 
