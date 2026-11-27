@@ -50,7 +50,7 @@ pip install langgraph
 
 **Step 3. First run downloads the embedding model** (~80 MB, only once):
 - Model: `all-MiniLM-L6-v2` (sentence-transformers), ONNX build.
-- Source: ChromaDB's own server, **not HuggingFace**, which works on the ZS network.
+- Source: ChromaDB's own server, **not HuggingFace**, which works on the company network.
 - Saved to: `C:\Users\<you>\.cache\chroma\onnx_models\all-MiniLM-L6-v2\`.
 - No PyTorch needed.
 
@@ -86,7 +86,7 @@ User preferences:
 - User prefers include citations: true
 Known facts about the user:
 - User is a portfolio manager
-- User works at ZS Associates
+- User works at Acme Corp
 Relevant past conclusions:
 - Past question: Compare NVIDIA and AMD data center revenue growth from Q1 to Q3. | Conclusion: NVIDIA's data center revenue rose ... 36.28% ...
 Recent conversation (this session):

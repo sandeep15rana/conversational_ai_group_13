@@ -77,7 +77,7 @@ def render_answer(preferences: dict) -> str:
 
 def state(query: str, session_id: str, final_output: str = "") -> dict:
     return {
-        "user_id": "rajarshi", "session_id": session_id, "sanitized_query": query,
+        "user_id": "demo_user", "session_id": session_id, "sanitized_query": query,
         "is_safe": True, "final_output": final_output, "is_hallucination_detected": False,
     }
 
@@ -98,7 +98,7 @@ def main() -> None:
     # ------------------------------------------------------------------ session 1
     section("SESSION 1 - user introduces themselves")
     q1 = (
-        "Hi, I'm a portfolio manager and I work at ZS Associates. "
+        "Hi, I'm a portfolio manager and I work at Acme Corp. "
         "I prefer tables with citations. Compare NVIDIA and AMD data center revenue growth from Q1 to Q3."
     )
     print(f"[User] {q1}\n")
@@ -109,7 +109,7 @@ def main() -> None:
     save1 = memory_save_node({**s1, "final_output": answer1})
     print(f"[Memory] {save1['execution_trace'][-1].split(': ', 1)[1]}")
     print("\n[Long-term memory now contains]")
-    for record in engine.list_memories("rajarshi"):
+    for record in engine.list_memories("demo_user"):
         print(f"  - ({record.memory_type.value}) {textwrap.shorten(record.text, 110)}")
 
     # ------------------------------------------------------------------ session 2
@@ -133,8 +133,8 @@ def main() -> None:
     section("PRIVACY CHECKS")
     other = memory_recall_node({**s2, "user_id": "another_user"})
     print(f"[Isolation] another_user sees: {other['recalled_context']!r}")
-    removed = engine.forget_user("rajarshi")
-    print(f"[Forget me] removed {removed} records for 'rajarshi'; remaining = {len(engine.list_memories('rajarshi'))}")
+    removed = engine.forget_user("demo_user")
+    print(f"[Forget me] removed {removed} records for 'demo_user'; remaining = {len(engine.list_memories('demo_user'))}")
 
     section("Developer 3 Module Summary")
     print("1. Short-term session buffer       : ACTIVE")

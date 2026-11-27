@@ -23,14 +23,14 @@ def pref(key, value, text=None):
 
 # ---------------------------------------------------------------- no duplicates
 def test_exact_duplicate_is_stored_once(store):
-    assert store.add("u1", fact("User works at ZS Associates"))[0] == WriteOutcome.ADDED
-    assert store.add("u1", fact("user works at   ZS associates."))[0] == WriteOutcome.DUPLICATE
+    assert store.add("u1", fact("User works at Acme Corp"))[0] == WriteOutcome.ADDED
+    assert store.add("u1", fact("user works at   Acme corp."))[0] == WriteOutcome.DUPLICATE
     assert store.count("u1") == 1
 
 
 def test_duplicate_refreshes_confidence(store):
-    store.add("u1", fact("User works at ZS Associates", confidence=0.6))
-    store.add("u1", fact("User works at ZS Associates", confidence=0.95))
+    store.add("u1", fact("User works at Acme Corp", confidence=0.6))
+    store.add("u1", fact("User works at Acme Corp", confidence=0.95))
     assert store.get_all("u1")[0].confidence == 0.95
 
 
@@ -52,7 +52,7 @@ def test_near_duplicate_updates_in_place(store):
 
 
 def test_different_memories_are_both_kept(store):
-    store.add("u1", fact("User works at ZS Associates"))
+    store.add("u1", fact("User works at Acme Corp"))
     store.add("u1", fact("User is based in Pune"))
     assert store.count("u1") == 2
 
@@ -123,8 +123,8 @@ def test_long_memory_is_chunked_and_shares_parent(embedder):
 
 # ---------------------------------------------------------------- search & delete
 def test_search_returns_similarity(store, embedder):
-    store.add("u1", fact("User works at ZS Associates"))
-    hits = store.search("u1", embedder.embed(["User works at ZS Associates"])[0], n_results=3)
+    store.add("u1", fact("User works at Acme Corp"))
+    hits = store.search("u1", embedder.embed(["User works at Acme Corp"])[0], n_results=3)
     assert hits[0][1] == pytest.approx(1.0, abs=1e-4)
     assert len(hits[0][2]) == embedder.dimension
 
@@ -134,7 +134,7 @@ def test_search_on_empty_store(store, embedder):
 
 
 def test_forget_user(store):
-    store.add("u1", fact("User works at ZS Associates"))
+    store.add("u1", fact("User works at Acme Corp"))
     store.add("u1", pref("format", "table"))
     store.add("u2", fact("Other user fact here"))
     assert store.delete_user("u1") == 2

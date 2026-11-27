@@ -58,7 +58,7 @@ def test_chunks_fit_model_window(real_engine, minilm):
 
 def test_semantic_recall_without_shared_words(real_engine):
     real_engine.remember("u1", "User is based in Pune, India")
-    real_engine.remember("u1", "User works at ZS Associates as a data analyst")
+    real_engine.remember("u1", "User works at Acme Corp as a data analyst")
     hits = real_engine.retriever.retrieve("u1", "Where does the user live?")
     assert hits and hits[0].record.text == "User is based in Pune, India"
 
@@ -74,13 +74,13 @@ def test_paraphrased_preference_conflict_resolved(real_engine):
 def test_end_to_end_through_nodes(real_engine):
     set_default_engine(real_engine)
     try:
-        s1 = {"user_id": "rajarshi", "session_id": "t1", "is_safe": True,
+        s1 = {"user_id": "demo_user", "session_id": "t1", "is_safe": True,
               "sanitized_query": "I am a senior equity analyst. I prefer concise answers with citations."}
         memory_recall_node(s1)
         memory_save_node({**s1, "final_output": "NVIDIA data center revenue rose 36.28% from Q1 to Q3, driven by AI demand.",
                           "is_hallucination_detected": False})
 
-        s2 = {"user_id": "rajarshi", "session_id": "t2", "is_safe": True,
+        s2 = {"user_id": "demo_user", "session_id": "t2", "is_safe": True,
               "sanitized_query": "How quickly has NVIDIA's AI server business expanded?"}
         out = memory_recall_node(s2)
         assert out["user_preferences"] == {"detail_level": "concise", "include_citations": True}

@@ -26,7 +26,7 @@ from memory_engine.extractor import RuleBasedExtractor  # noqa: E402
 USER = "eval_user"
 
 MEMORIES: dict[str, tuple[str, MemoryType]] = {
-    "employer": ("User works at ZS Associates as a data analyst", MemoryType.FACT),
+    "employer": ("User works at Acme Corp as a data analyst", MemoryType.FACT),
     "city": ("User is based in Pune, India", MemoryType.FACT),
     "sector": ("User mainly tracks the semiconductor sector", MemoryType.FACT),
     "portfolio": ("User holds NVIDIA and AMD shares in a long-term portfolio", MemoryType.FACT),
