@@ -1,0 +1,13 @@
+# Memory Engine (Developer 3) - Python 3.12 recommended
+chromadb>=1.0,<2          # vector store + all-MiniLM-L6-v2 ONNX model (no PyTorch, no HuggingFace)
+pydantic>=2.6,<3
+python-dotenv>=1.0
+
+# Optional: LLM-based memory extraction (used only when OPENAI_API_KEY is set)
+# langchain-openai>=0.2
+
+# Development / tests
+pytest>=8
+pytest-cov>=5
+langgraph>=0.2            # only to run the integration test against Sandeep's graph
+langchain-core>=0.3
